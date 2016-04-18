@@ -1,0 +1,14 @@
+{
+  "name": "theprice",
+  "description": "It gives the price of things",
+  "region": "us-east-1",
+  "handler": "lambda_function.lambda_handler",
+  "role": "arn:aws:iam::996747011861:role/lambda_basic_execution",
+  "ignore": [
+    "circle.yml",
+    ".git",
+    "/*.pyc"
+  ],
+  "timeout": 30,
+  "memory": 512
+}

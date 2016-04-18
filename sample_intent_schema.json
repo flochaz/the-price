@@ -1,0 +1,13 @@
+{
+    "intents": [
+        {
+            "slots": [
+                {
+                    "type": "AMAZON.LITERAL", 
+                    "name": "Item"
+                }
+            ], 
+            "intent": "GetItemPriceIntent"
+        }
+    ]
+}

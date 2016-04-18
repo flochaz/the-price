@@ -1,0 +1,3 @@
+GetItemPriceIntent	of  {echo|Item}
+GetItemPriceIntent	what the price of  {echo|Item}
+GetItemPriceIntent	how much cost  {echo|Item}
