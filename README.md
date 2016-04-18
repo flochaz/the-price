@@ -1,1 +1,1 @@
-# truth-or-dare
+# The Price
