@@ -1,6 +1,7 @@
 import click
-from search_engine.price_finder import PriceFinder
-import utils
+
+from the_price.search_engine.price_finder import PriceFinder
+
 
 @click.command()
 @click.argument('item', type=click.STRING)

@@ -2,13 +2,15 @@ import unittest
 from urllib2 import HTTPError
 
 import mock
-from search_engine.amazon_price_finder import AmazonPriceFinder
-import  search_engine
+
+from the_price.search_engine.amazon_price_finder import  AmazonPriceFinder
+import the_price
+
 
 class TestAmazonPriceFinder(unittest.TestCase):
 
     def test_search_with_wrong_creds(self):
-        with mock.patch.dict(search_engine.amazon_price_finder.os.environ,{'AMAZON_ACCESS_KEY':'test',
+        with mock.patch.dict(the_price.search_engine.amazon_price_finder.os.environ, {'AMAZON_ACCESS_KEY': 'test',
                                                                            'AMAZON_SECRET_KEY': 'test',
                                                                            'AMAZON_ASSOC_TAG' : 'test'}):
             finder = AmazonPriceFinder()
