@@ -3,3 +3,4 @@ click
 google-api-python-client
 mock
 pytest
+boto3
