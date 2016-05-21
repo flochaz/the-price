@@ -1,1 +1,5 @@
 python-amazon-simple-product-api
+click
+google-api-python-client
+mock
+pytest
