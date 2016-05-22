@@ -5,6 +5,10 @@ python:
 install:
   - pip install python-coveralls
   - pip install tox-travis
+  - pip install lambda-uploader
 script: tox
 after_success:
+  - ls
+  - ls -la tests/
   - coveralls --data_file tests/.coverage
+  - Lambda-uploader
