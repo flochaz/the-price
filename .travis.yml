@@ -8,7 +8,8 @@ install:
   - pip install lambda-uploader
 script: tox
 after_success:
-  - ls
-  - ls -la tests/
+  - ls -la
+  - find ./ -name .coverage
   - coveralls --data_file tests/.coverage
+  - pip install .
   - Lambda-uploader
