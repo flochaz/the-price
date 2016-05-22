@@ -17,13 +17,18 @@ setup(name='alexa-skill-the-price',
       author='Florian CHAZAL',
       author_email='florianchazal@gmail.com',
       url='https://github.com/flochaz/the-price',
-      packages=['ask', 'ask.config'], 
+      packages=[
+          'ask',
+          'ask.config',
+          'the_price',
+          'the_price.search_engine',
+          'the_price.utils'],
       package_data={'ask.config': ['../data/*']},
       license='MIT',
       install_requires=dependencies,
     entry_points={
         'console_scripts': [
-            'ask-the-price = command_line:ask_the_price_of',
+            'ask-the-price = the_price.command_line:ask_the_price_of',
         ],
     }
 )

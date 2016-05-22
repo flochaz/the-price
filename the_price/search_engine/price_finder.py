@@ -1,4 +1,4 @@
-from google_price_finder import GooglePriceFinder
+#from google_price_finder import GooglePriceFinder
 from  amazon_price_finder import AmazonPriceFinder
 
 class PriceFinder(object):

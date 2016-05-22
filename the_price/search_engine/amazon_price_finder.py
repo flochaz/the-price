@@ -19,31 +19,32 @@ class AmazonPriceFinder(object):
         Set creds from env variables. Raise KeyError exception if any env var not found
         """
         self.name = 'Amazon'
-        # Setup creds from env variables
+        # Decipher Main AWS creds using KMS encryption mechanism
+        # The process here is a bit tricky: Due to the fact Amazon Product API does not support AIM, we had to implement
+        # the following step to avoid to have Main AWS creds exposed in the source code:
+        # 1. Create user for travis CI and AWS Lambda
+        # 2. Create a KMS encryption Key and allow travis and lambda to access it
+        # 3. Add travis user creds to travis env
+        # 4. Add the code to decipher the hardcoded main AWS encrypted key
 
-        try:
-            global AMAZON_ACCESS_KEY
-            global AMAZON_SECRET_KEY
-            global AMAZON_ASSOC_TAG
-            AMAZON_ACCESS_KEY=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ACCESS_KEY))
-            AMAZON_SECRET_KEY=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_SECRET_KEY))
-            AMAZON_ASSOC_TAG=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ASSOC_TAG))
-        except Exception as e:
-            print 'Failed to get creds from KMS: ' + e.message
-            print 'will try from env'
-            # Try from environment variables raising an error
-            try:
-                AMAZON_ACCESS_KEY = os.environ['AMAZON_ACCESS_KEY']
-                AMAZON_SECRET_KEY = os.environ['AMAZON_SECRET_KEY']
-                AMAZON_ASSOC_TAG = os.environ['AMAZON_ASSOC_TAG']
-            except KeyError as e:
-                raise e
+
+        global AMAZON_ACCESS_KEY
+        global AMAZON_SECRET_KEY
+        global AMAZON_ASSOC_TAG
+        AMAZON_ACCESS_KEY=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ACCESS_KEY))
+        AMAZON_SECRET_KEY=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_SECRET_KEY))
+        AMAZON_ASSOC_TAG=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ASSOC_TAG))
+
 
     def find(self, item):
+        """
+        :param item: item to search
+        :return: title from vendor, price, currency . Raise a amazon.api.SearchException if nothing found
+        """
         amazon = AmazonAPI(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
-        print('search ' + item + ' on amazon')
         products = amazon.search_n( 1, Keywords=item, SearchIndex='All')
+
         title = products[0].title
-        price, currency  = products[0].list_price
-        print title + ' cost ' +  str(price) + ' ' + currency + ' on amazon'
+        price, currency = products[0].list_price
+
         return title, price, currency
