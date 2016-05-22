@@ -8,7 +8,6 @@ class test_kms(unittest.TestCase):
 
     def test_encrypt_decrypt_no_base64(self):
 
-        kms = boto3.client('kms')
         boto_master_key_id = '37778f56-196d-47aa-bc4f-20637167e230'
 
         AMAZON_ACCESS_KEY="AAAAAAAAAAAAAAAAAAAA"

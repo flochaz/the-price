@@ -19,7 +19,7 @@ def encrypt_data(key,data):
     return Encrpyted_Data
 
 def decrypt_data(encrypted_data):
-    kms = boto3.client('kms')
+    kms = boto3.client('kms', region_name='us-east-1')
     decrypted = kms.decrypt(CiphertextBlob=encrypted_data)
     Decrypted_Data = decrypted['Plaintext']
     return Decrypted_Data
