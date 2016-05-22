@@ -13,7 +13,7 @@ def resolv_strategy(shop):
     return 'AmazonPriceFinder'
 
 def encrypt_data(key,data):
-    kms = boto3.client('kms')
+    kms = boto3.client('kms', region_name='us-east-1')
     encrypted = kms.encrypt(KeyId=key, Plaintext=data)
     Encrpyted_Data = encrypted['CiphertextBlob']
     return Encrpyted_Data
