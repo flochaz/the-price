@@ -9,4 +9,4 @@ install:
 script: tox
 after_success:
   - coveralls --data_file ./tests/.coverage
-  - Lambda-uploader
+  - lambda-uploader
