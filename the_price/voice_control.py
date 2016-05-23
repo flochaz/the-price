@@ -40,12 +40,14 @@ def get_item_price_intent_handler(request):
     item = request.slots["Item"]  # Gets an Item Slot from the Request object.
 
     if item == None:
+        return alexa.create_response("I didn't get what you said ...")
+
+    try:
+        price_finder = PriceFinder()
+        title, price, currency = price_finder.find(item)
+        response = title + ' cost ' +  str(price) + ' ' + currency + ' on ' + price_finder.name
+    except:
         return alexa.create_response("Could not find this item!")
-
-
-    price_finder = PriceFinder()
-    title, price, currency = price_finder.find(item)
-    response = title + ' cost ' +  str(price) + ' ' + currency + ' on ' + price_finder.name
 
     # All manipulations to the request's session object are automatically reflected in the request returned to Amazon.
     # For e.g. This statement adds a new session attribute (automatically returned with the response) storing the
