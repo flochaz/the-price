@@ -2,15 +2,9 @@ sudo: false
 language: python
 python:
   - "2.7"
-before_install:
-    - pip install pytest pytest-cov
-    - pip install coveralls
 install:
-  - pip install python-coveralls
   - pip install tox-travis
   - pip install lambda-uploader
 script: tox
 after_success:
-  - find ./ -name *coverage
-  - coveralls
   - lambda-uploader
