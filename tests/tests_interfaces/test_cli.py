@@ -1,8 +1,10 @@
 import unittest
-from click.testing import CliRunner
-from the_price import command_line
-from mock import patch
+
 from amazon.api import SearchException
+from click.testing import CliRunner
+from mock import patch
+
+from the_price.interfaces import command_line
 
 
 class TestCLI(unittest.TestCase):
@@ -14,7 +16,8 @@ class TestCLI(unittest.TestCase):
         assert not result.exception
         self.assertTrue('Usage' in result.output)
 
-    @patch('the_price.command_line.PriceFinder.find')
+    #TODO: Mock key decryption and search
+    @patch('the_price.interfaces.command_line.PriceFinder.find')
     def test_cli_exiting_item(self, find):
         find.return_value = 'kindle', '119', 'USD'
         runner = CliRunner()
@@ -24,8 +27,8 @@ class TestCLI(unittest.TestCase):
         self.assertTrue('kindle cost 119 USD on Amazon' in result.output)
 
 
-
-    @patch('the_price.command_line.PriceFinder.find')
+    #TODO: Mock key decryption and search
+    @patch('the_price.interfaces.command_line.PriceFinder.find')
     def test_cli_not_existing_item(self, find):
         find.side_effect = SearchException()
         runner = CliRunner()

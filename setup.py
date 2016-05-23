@@ -22,13 +22,14 @@ setup(name='alexa-skill-the-price',
           'ask.config',
           'the_price',
           'the_price.search_engine',
-          'the_price.utils'],
+          'the_price.utils',
+          'the_price.interfaces'],
       package_data={'ask.config': ['../data/*']},
       license='MIT',
       install_requires=dependencies,
     entry_points={
         'console_scripts': [
-            'ask-the-price = the_price.command_line:ask_the_price_of',
+            'ask-the-price = the_price.interfaces.command_line:ask_the_price_of',
         ],
     }
 )

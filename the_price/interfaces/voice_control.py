@@ -5,6 +5,12 @@ In this file we specify default event handlers which are then populated into the
 from ask import alexa
 from the_price.search_engine.price_finder import PriceFinder
 
+WELCOME_MSG = "Hello Welcome to The Price!"
+REPROMPT_MSG = "Just ask"
+END_MSG = "Goodbye!"
+UNKNOWN_MSG = "Sorry, I didn't get what you said ..."
+NOT_FOUND_MSG = "Could not find this item!"
+CARD_MSG = "What does the card is for ? "
 
 def lambda_handler(request_obj, context=None):
 
@@ -16,18 +22,18 @@ def lambda_handler(request_obj, context=None):
 @alexa.default_handler()
 def default_handler(request):
     """ The default handler gets invoked if no handler is set for a request type """
-    return alexa.create_response(message="Just ask")
+    return alexa.create_response(message=REPROMPT_MSG)
 
 
 @alexa.request_handler("LaunchRequest")
 def launch_request_handler(request):
     ''' Handler for LaunchRequest '''
-    return alexa.create_response(message="Hello Welcome to The Price!")
+    return alexa.create_response(message=WELCOME_MSG)
 
 
 @alexa.request_handler("SessionEndedRequest")
 def session_ended_request_handler(request):
-    return alexa.create_response(message="Goodbye!")
+    return alexa.create_response(message=END_MSG)
 
 
 @alexa.intent_handler('GetItemPriceIntent')
@@ -40,14 +46,14 @@ def get_item_price_intent_handler(request):
     item = request.slots["Item"]  # Gets an Item Slot from the Request object.
 
     if item == None:
-        return alexa.create_response("I didn't get what you said ...")
+        return alexa.create_response(UNKNOWN_MSG)
 
     try:
         price_finder = PriceFinder()
         title, price, currency = price_finder.find(item)
         response = title + ' cost ' +  str(price) + ' ' + currency + ' on ' + price_finder.name
     except:
-        return alexa.create_response("Could not find this item!")
+        return alexa.create_response(NOT_FOUND_MSG)
 
     # All manipulations to the request's session object are automatically reflected in the request returned to Amazon.
     # For e.g. This statement adds a new session attribute (automatically returned with the response) storing the
@@ -59,7 +65,7 @@ def get_item_price_intent_handler(request):
 
     # alexa can also build cards which can be sent as part of the response
     card = alexa.create_card(title="GetItemPriceIntent activated", subtitle=None,
-                             content="asked alexa to find the price of {}".format(item))
+                             content=CARD_MSG)
 
     return alexa.create_response(response,
                                  end_session=False, card_obj=card)
