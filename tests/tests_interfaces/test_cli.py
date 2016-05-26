@@ -16,10 +16,12 @@ class TestCLI(unittest.TestCase):
         assert not result.exception
         self.assertTrue('Usage' in result.output)
 
-    #TODO: Mock key decryption and search
+    @patch('the_price.utils.utils.decrypt_data')
     @patch('the_price.interfaces.command_line.PriceFinder.find')
-    def test_cli_exiting_item(self, find):
+    def test_cli_exiting_item(self, find, decrypt_data):
+        decrypt_data.return_value = None
         find.return_value = 'kindle', '119', 'USD'
+        find.exit_code = 0
         runner = CliRunner()
         result = runner.invoke(command_line.ask_the_price_of, ['kindle'])
         assert result.exit_code == 0
@@ -27,9 +29,10 @@ class TestCLI(unittest.TestCase):
         self.assertTrue('kindle cost 119 USD on Amazon' in result.output)
 
 
-    #TODO: Mock key decryption and search
+    @patch('the_price.utils.utils.decrypt_data')
     @patch('the_price.interfaces.command_line.PriceFinder.find')
-    def test_cli_not_existing_item(self, find):
+    def test_cli_not_existing_item(self, find, decrypt_data):
+        decrypt_data.return_value = None
         find.side_effect = SearchException()
         runner = CliRunner()
         result = runner.invoke(command_line.ask_the_price_of, ['qwertyui'])

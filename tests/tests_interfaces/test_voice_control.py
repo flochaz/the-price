@@ -2,10 +2,11 @@ import unittest
 from mock import patch
 
 from the_price.interfaces import voice_control
+from amazon.api import SearchException
+
 
 class TestVoiceControl(unittest.TestCase):
 
-    #TODO: check find not called
     def test_launch_request_route_to_welcome(self):
         request = {
           "request": {
@@ -18,7 +19,6 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.WELCOME_MSG)
 
 
-    #TODO: check find not called
     def test_end_session_request_route_to_end(self):
         request = {
           "request": {
@@ -30,8 +30,7 @@ class TestVoiceControl(unittest.TestCase):
 
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.END_MSG)
 
-    #TODO: check find not called
-    def test_unknown_intent_request_route_to_default(self):
+    def test_unknown_utterance_request_route_to_default(self):
         request = {
           "request": {
             "type": "IntentRequest",
@@ -54,8 +53,13 @@ class TestVoiceControl(unittest.TestCase):
         response = voice_control.lambda_handler(request)
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
 
-    #TODO: Mock key decryption and search
-    def test_get_existing_item(self):
+    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.interfaces.command_line.PriceFinder.find')
+    def test_get_existing_item(self, find, decrypt_data):
+        price = '119'
+        currency = 'USD'
+        decrypt_data.return_value = None
+        find.return_value = 'kindle', price, currency
         request = {
           "request": {
             "type": "IntentRequest",
@@ -76,11 +80,14 @@ class TestVoiceControl(unittest.TestCase):
         }
 
         response = voice_control.lambda_handler(request)
-        self.assertTrue('cost' in response['response']['outputSpeech']['text'])
+        self.assertTrue('cost ' + price + ' ' + currency  in response['response']['outputSpeech']['text'])
         self.assertEqual(response['response']['card']['content'],voice_control.CARD_MSG)
 
-    #TODO: Mock key decryption and search
-    def test_get_not_existing_item(self):
+    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.interfaces.command_line.PriceFinder.find')
+    def test_get_not_existing_item(self, find, decrypt_data):
+        decrypt_data.return_value = None
+        find.side_effect = SearchException()
         request = {
           "request": {
             "type": "IntentRequest",
@@ -104,8 +111,8 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.NOT_FOUND_MSG)
 
 
-    #TODO: Mock key decryption and search
-    def test_get_none_item(self):
+    @patch('the_price.interfaces.command_line.PriceFinder.find')
+    def test_get_none_item(self, find):
         request = {
           "request": {
             "type": "IntentRequest",
@@ -127,3 +134,4 @@ class TestVoiceControl(unittest.TestCase):
 
         response = voice_control.lambda_handler(request)
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.UNKNOWN_MSG)
+        self.assertFalse(find.called)
