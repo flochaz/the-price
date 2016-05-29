@@ -31,6 +31,24 @@ Reading advice: [Getting started guide for the Alexa Skills Kit](https://develop
   Alexa, ask How much is a travel to space
 ```
 
+### Command Line version
+To facilitate testing and interaction, a really simple command line is as well available.
+To install it you can simply:
+```
+git clone https://github.com/flochaz/the-price/
+cd the-price
+pip install .
+(python2.7-venv)florians-MacBook-Air:the-price flochaz$ ask-the-price --help
+Usage: ask-the-price [OPTIONS] ITEM
+
+  Main function to get the price of an item from a specific shop. If no shop
+  provided, default strategy will apply
+
+Options:
+  --shop TEXT  Narrow done the search to a specific shop
+  --help       Show this message and exit.
+```
+
 ## Technical apsects
 
 ### Current supported Search engine
@@ -38,9 +56,9 @@ Reading advice: [Getting started guide for the Alexa Skills Kit](https://develop
 * Google Custom Search API
 
 ### Feedbacks
-* I ran into some troubles mainly due to the fact that Amazon Produtizing API does not support IAM and Amazon Lambda that does not support environment variables and forced me to leverage Amazon KMS Service.
-* Packaging python for AWS Lambda was kind of a pain as well since I was relying on a lib called lxml which needs specific .so files compiled for Lambda runtime. So I had to spin up an AIM similar to amazon lambda and compile and extract lxml .so (that is the reason why you have this lxml folder into the repo) 
-* The lack of Alexa testing API complexify a lot integration tests
+* I ran into some troubles mainly due to the fact that Amazon Produtizing API does not support IAM and Amazon Lambda does not support environment variables. These limitations forced me to leverage Amazon KMS Service to encrypt/decrypt credentials (for the good at the end).
+* Packaging python for AWS Lambda was kind of a pain as well since I was relying on a lib called lxml which needs specific .so files compiled for Lambda runtime. So I had to spin up an AIM similar to amazon lambda to compile and extract lxml .so (that is the reason why you have this lxml folder into the repo).
+* The lack of Alexa testing API complexify automated integration testing
 
 ### Unit Tests
 
