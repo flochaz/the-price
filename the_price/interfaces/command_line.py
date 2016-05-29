@@ -1,7 +1,5 @@
 import click
-from amazon.api import SearchException
-from the_price.search_engine.price_finder import PriceFinder
-
+from the_price.search_engines.search_engine import SearchEngine
 
 @click.command()
 @click.argument('item', type=click.STRING)
@@ -10,8 +8,8 @@ def ask_the_price_of(item, shop):
     """Main function to get the price of an item from a specific shop.
     If no shop provided, default strategy will apply"""
     try:
-        price_finder = PriceFinder()
+        price_finder = SearchEngine(shop)
         title, price, currency = price_finder.find(item)
-        click.echo(title + ' cost ' +  str(price) + ' ' + currency + ' on ' + price_finder.name)
-    except SearchException:
-        click.echo('Item not found')
+        click.echo(title + ' cost ' + str(price) + ' ' + currency + ' on ' + price_finder.name)
+    except Exception as e:
+        click.echo('Item not found ')

@@ -3,7 +3,7 @@ In this file we specify default event handlers which are then populated into the
 """
 
 from ask import alexa
-from the_price.search_engine.price_finder import PriceFinder
+from the_price.search_engines.search_engine import SearchEngine
 
 WELCOME_MSG = "Hello Welcome to The Price!"
 REPROMPT_MSG = "Just ask"
@@ -49,9 +49,9 @@ def get_item_price_intent_handler(request):
         return alexa.create_response(UNKNOWN_MSG)
 
     try:
-        price_finder = PriceFinder()
-        title, price, currency = price_finder.find(item)
-        response = title + ' cost ' +  str(price) + ' ' + currency + ' on ' + price_finder.name
+        search_engine = SearchEngine()
+        title, price, currency = search_engine.find(item)
+        response = title + ' cost ' +  str(price) + ' ' + currency + ' on ' + search_engine.name
     except:
         return alexa.create_response(NOT_FOUND_MSG)
 

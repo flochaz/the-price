@@ -54,7 +54,7 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
 
     @patch('the_price.utils.utils.decrypt_data')
-    @patch('the_price.interfaces.command_line.PriceFinder.find')
+    @patch('the_price.interfaces.command_line.SearchEngine.find')
     def test_get_existing_item(self, find, decrypt_data):
         price = '119'
         currency = 'USD'
@@ -84,7 +84,7 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['card']['content'],voice_control.CARD_MSG)
 
     @patch('the_price.utils.utils.decrypt_data')
-    @patch('the_price.interfaces.command_line.PriceFinder.find')
+    @patch('the_price.interfaces.command_line.SearchEngine.find')
     def test_get_not_existing_item(self, find, decrypt_data):
         decrypt_data.return_value = None
         find.side_effect = SearchException()
@@ -111,7 +111,7 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.NOT_FOUND_MSG)
 
 
-    @patch('the_price.interfaces.command_line.PriceFinder.find')
+    @patch('the_price.interfaces.command_line.SearchEngine.find')
     def test_get_none_item(self, find):
         request = {
           "request": {
