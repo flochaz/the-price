@@ -1,12 +1,4 @@
-GetItemPriceIntent	is {tesla model three|Item}
-GetItemPriceIntent	is the {U.S. debt|Item}
-GetItemPriceIntent	is a {kindle fire HD seven|Item}
-GetItemPriceIntent	is an {amazon echo|Item}
-GetItemPriceIntent	are {tesla model S|Item}
-GetItemPriceIntent	are  the {kobe bryant newport beach house|Item}
-GetItemPriceIntent	are  a {Cabrinha Switchblade two thousand and fithteen|Item}
-GetItemPriceIntent	are  an {dji phantom four|Item}
-GetItemPriceIntent	cost {iphone SE sixty four GB|Item}
-GetItemPriceIntent	cost the {amazon echo|Item}
-GetItemPriceIntent	cost a {amazon echo|Item}
-GetItemPriceIntent	cost an {amazon echo|Item}
+Intent is {a tesla model three|Item}
+GetItemPriceIntent are {the dji phantom four|Item}
+GetItemPriceIntent cost {an iphone SE sixty four GB|Item}
+GetItemPriceIntent worth {a travel to space|Item}

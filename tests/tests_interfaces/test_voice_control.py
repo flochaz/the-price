@@ -82,7 +82,7 @@ class TestVoiceControl(unittest.TestCase):
 
         response = voice_control.lambda_handler(request)
         self.assertTrue(item + ' seems to worth ' + price + ' ' + currency  in response['response']['outputSpeech']['text'])
-        self.assertEqual(response['response']['card']['content'],voice_control.CARD_MSG)
+        self.assertEqual(response['response']['card']['content'], response['response']['outputSpeech']['text'])
 
     @patch('the_price.utils.utils.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')

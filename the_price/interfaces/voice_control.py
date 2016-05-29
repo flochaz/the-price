@@ -5,12 +5,11 @@ In this file we specify default event handlers which are then populated into the
 from ask import alexa
 from the_price.search_engines.search_engine import SearchEngine
 
-WELCOME_MSG = "Hello Welcome to The Price!"
+WELCOME_MSG = "Hello Welcome to How much !"
 REPROMPT_MSG = "Just ask"
 END_MSG = "Goodbye!"
 UNKNOWN_MSG = "Sorry, I didn't get what you said ..."
-NOT_FOUND_MSG = "Could not find this item!"
-CARD_MSG = "What does the card is for ? "
+NOT_FOUND_MSG = "Sorry, I could not find the answer."
 
 def lambda_handler(request_obj, context=None):
 
@@ -56,8 +55,8 @@ def get_item_price_intent_handler(request):
         return alexa.create_response(NOT_FOUND_MSG)
 
     # alexa can also build cards which can be sent as part of the response
-    card = alexa.create_card(title="GetItemPriceIntent activated", subtitle=None,
-                             content=CARD_MSG)
+    card = alexa.create_card(title="GetItemPriceIntent " + item, subtitle=None,
+                             content=response)
 
     return alexa.create_response(response,
                                  end_session=False, card_obj=card)
