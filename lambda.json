@@ -2,7 +2,7 @@
   "name": "theprice",
   "description": "It gives the price of things",
   "region": "us-east-1",
-  "handler": "the_price/voice_control.lambda_handler",
+  "handler": "the_price/interfaces/voice_control.lambda_handler",
   "role": "arn:aws:iam::996747011861:role/lambda_basic_execution",
   "requirements": ["python-amazon-simple-product-api"],
   "ignore": [
