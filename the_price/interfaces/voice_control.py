@@ -51,17 +51,9 @@ def get_item_price_intent_handler(request):
     try:
         search_engine = SearchEngine()
         title, price, currency = search_engine.find(item)
-        response = item + ' cost ' +  str(price) + ' ' + currency + ' on ' + search_engine.finder.name
+        response = item + ' seems to worth ' +  str(price) + ' ' + currency + ' according to ' + search_engine.finder.name
     except:
         return alexa.create_response(NOT_FOUND_MSG)
-
-    # All manipulations to the request's session object are automatically reflected in the request returned to Amazon.
-    # For e.g. This statement adds a new session attribute (automatically returned with the response) storing the
-    # Last seen item value in the 'last_item' key.
-
-    # request.session['last_item'] = item # Automatically returned as a sessionAttribute
-
-    # Modifying state like this saves us from explicitly having to return Session objects after every response
 
     # alexa can also build cards which can be sent as part of the response
     card = alexa.create_card(title="GetItemPriceIntent activated", subtitle=None,

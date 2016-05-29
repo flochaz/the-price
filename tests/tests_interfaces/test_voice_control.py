@@ -80,7 +80,7 @@ class TestVoiceControl(unittest.TestCase):
         }
 
         response = voice_control.lambda_handler(request)
-        self.assertTrue('cost ' + price + ' ' + currency  in response['response']['outputSpeech']['text'])
+        self.assertTrue(' seems to worth  ' + price + ' ' + currency  in response['response']['outputSpeech']['text'])
         self.assertEqual(response['response']['card']['content'],voice_control.CARD_MSG)
 
     @patch('the_price.utils.utils.decrypt_data')
