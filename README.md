@@ -27,7 +27,7 @@ Reading advice: [Getting started guide for the Alexa Skills Kit](https://develop
 
 ### API: Examples of utterances to play with the skill:
 ```
-  Alexa, How much is a kindle fire HD7
+  Alexa, ask How much is a kindle fire HD7
   Alexa, ask How much is a travel to space
 ```
 

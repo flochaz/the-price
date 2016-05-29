@@ -1,5 +1,5 @@
 {
-  "name": "theprice",
+  "name": "HowMuch",
   "description": "It gives the price of things",
   "region": "us-east-1",
   "handler": "the_price/interfaces/voice_control.lambda_handler",
