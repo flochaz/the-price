@@ -51,7 +51,7 @@ def get_item_price_intent_handler(request):
     try:
         search_engine = SearchEngine()
         title, price, currency = search_engine.find(item)
-        response = title + ' cost ' +  str(price) + ' ' + currency + ' on ' + search_engine.finder.name
+        response = item + ' cost ' +  str(price) + ' ' + currency + ' on ' + search_engine.finder.name
     except:
         return alexa.create_response(NOT_FOUND_MSG)
 
