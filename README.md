@@ -52,10 +52,12 @@ Options:
 ## Technical apsects
 
 ### Current supported Search engine
+
 * Amazon Productizing API
 * Google Custom Search API
 
 ### Feedbacks
+
 * I ran into some troubles mainly due to the fact that Amazon Produtizing API does not support IAM and Amazon Lambda does not support environment variables. These limitations forced me to leverage Amazon KMS Service to encrypt/decrypt credentials (for the good at the end).
 * Packaging python for AWS Lambda was kind of a pain as well since I was relying on a lib called lxml which needs specific .so files compiled for Lambda runtime. So I had to spin up an AIM similar to amazon lambda to compile and extract lxml .so (that is the reason why you have this lxml folder into the repo).
 * The lack of Alexa testing API complexify automated integration testing
@@ -70,6 +72,13 @@ tox
 ### Acceptance Tests
 
 WORK IN PROGRESS : Leveraging the hack proposed by Sam Machin (https://github.com/sammachin/AlexaPi) I am developing a Lib for Robot Framework to automate Acceptance tests
+
+### Backlog
+* implement capability to ask a search on a specific search engine (supported only through command line today)
+* implement capability to ask for the search engine complete item description
+* implement capability to ask and store response regarding the accuracy of the answer ("Does the answer sounds correct ?")
+* Normalize returned price format
+* Add acceptance tests
 
 ### Contribution
 
