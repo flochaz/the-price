@@ -59,4 +59,4 @@ def get_item_price_intent_handler(request):
                              content=response)
 
     return alexa.create_response(response,
-                                 end_session=False, card_obj=card)
+                                 end_session=True, card_obj=card)
