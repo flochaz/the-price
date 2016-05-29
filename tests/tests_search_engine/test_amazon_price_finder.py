@@ -1,6 +1,6 @@
 import unittest
 from urllib2 import HTTPError
-from amazon.api import SearchException
+from the_price.search_engines.price_finder import ItemNotFoundException
 
 import mock
 
@@ -40,5 +40,5 @@ class TestAmazonPriceFinder(unittest.TestCase):
             finder.find('bdgjudmymhrdm')
             self.fail()
         except Exception as ex:
-            self.assertIsInstance(ex, SearchException)
+            self.assertIsInstance(ex, ItemNotFoundException)
 

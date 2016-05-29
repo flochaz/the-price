@@ -10,6 +10,6 @@ def ask_the_price_of(item, shop):
     try:
         price_finder = SearchEngine(shop)
         title, price, currency = price_finder.find(item)
-        click.echo(title + ' cost ' + str(price) + ' ' + currency + ' on ' + price_finder.name)
+        click.echo(title + ' cost ' + str(price) + ' ' + currency + ' on ' + price_finder.finder.name)
     except Exception as e:
         click.echo('Item not found ')

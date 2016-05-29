@@ -3,7 +3,7 @@ from amazon.api import AmazonAPI
 from the_price.utils import utils
 import base64
 
-from the_price.search_engines.price_finder import PriceFinder
+from the_price.search_engines.price_finder import PriceFinder, ItemNotFoundException
 
 ENCRYPTED_AMAZON_ACCESS_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKbAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAAByMHAGCSqGSIb3DQEHBqBjMGECAQAwXAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAwmncVuuLId80GkOzACARCAL6KWOAUtQNTZ0WLd2byRA95Mt8g/tcgPtXorhzKdC0GPXcJ2pDYMwy3ZnxKDDV8I'
 ENCRYPTED_AMAZON_SECRET_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKwAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAACHMIGEBgkqhkiG9w0BBwagdzB1AgEAMHAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMnQYaltzbBomNj7LyAgEQgEOp7hHGe3d1jsY/sl1u+NCXUJUEMYhHkQOqb2+YT6lL6/zrdQXz5auLhgmh3+vL/HtWkq18fWvrAGW5226mSoB2a+eN'
@@ -42,10 +42,13 @@ class AmazonPriceFinder(PriceFinder):
         :param item: item to search
         :return: title from vendor, price, currency . Raise a amazon.api.SearchException if nothing found
         """
-        amazon = AmazonAPI(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
-        products = amazon.search_n( 1, Keywords=item, SearchIndex='All')
+        try:
+            amazon = AmazonAPI(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
+            products = amazon.search_n( 1, Keywords=item, SearchIndex='All')
 
-        title = products[0].title
-        price, currency = products[0].list_price
+            title = products[0].title
+            price, currency = products[0].list_price
 
-        return title, price, currency
+            return title, price, currency
+        except:
+            raise ItemNotFoundException

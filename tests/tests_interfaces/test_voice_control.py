@@ -54,7 +54,7 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
 
     @patch('the_price.utils.utils.decrypt_data')
-    @patch('the_price.interfaces.command_line.SearchEngine.find')
+    @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
     def test_get_existing_item(self, find, decrypt_data):
         price = '119'
         currency = 'USD'

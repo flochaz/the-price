@@ -8,15 +8,29 @@ from the_price.search_engines.google_price_finder import GooglePriceFinder
 
 class SearchEngine(object):
 
-    def __init__(self, target='amazon'):
-        if not target:
-            target = 'amazon'
-        resolved_target = resolv_strategy(target)
-        self.finder = resolved_target()
-        self.name = self.finder.name
+    def __init__(self, target=None):
+        self.target = target
+        self.finder = None
+        if self.target:
+            resolved_target = resolv_target(self.target)
+            self.finder = resolved_target()
 
     def find(self, item):
-        return self.finder.find(item)
+        if self.finder:
+            return self.finder.find(item)
+        else:
+            text, price, currency = None, None, None
+            for price_finder_class in get_all_finders_classes():
+                print 'Find {item} with {finder}'.format(item=item, finder=price_finder_class.__name__)
+                self.finder = price_finder_class()
+                try:
+                    text, price, currency = self.finder.find(item)
+                except Exception as e:
+                    continue
+                if price:
+                    break
+
+            return text, price, currency
 
 
 
@@ -26,7 +40,7 @@ class SearchEngine(object):
 
 
 
-def resolv_strategy(target):
+def resolv_target(target):
     """
     Static function enabling to find the corresponding strategy finder to use from a user input
     :param target: user entry that needs to be linked to an existing finder

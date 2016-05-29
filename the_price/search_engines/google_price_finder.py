@@ -7,7 +7,7 @@ from the_price.utils import utils
 import base64
 import re
 
-from the_price.search_engines.price_finder import PriceFinder
+from the_price.search_engines.price_finder import PriceFinder, ItemNotFoundException
 
 ENCRYPTED_GOOGLE_DEVELOPER_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKvAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAACGMIGDBgkqhkiG9w0BBwagdjB0AgEAMG8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMewGXR5nRnAhvG+V7AgEQgEJw8+MnUI02rDomatA2NSZa7DBmKG8hCUwbIsxx4m7OkTvOEa4XqNnqzo4ryhGYzbAPK7iwDnCk6iaLvBv3Q96TGWM='
 ENCRYPTED_GOOGLE_CUSTOM_SEARCH_ENGINE_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKoAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAAB/MH0GCSqGSIb3DQEHBqBwMG4CAQAwaQYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyR114xwTWYi7LVqpICARCAPBRadBmFoyLKzLYGeEHei0dwuTcn1C9jy8NM22rOMRN0RYcXMx/12cmgDzq58bZqO1/u3e+8BK7AIo7pzA=='
@@ -60,7 +60,10 @@ class GooglePriceFinder(PriceFinder):
                 original_description, price, currency = extract_price_from_text(response['items'][check_items]['snippet'])
                 pprint.pprint(original_description)
             check_items += 1
-        print 'RETURN WHAT ?'
+
+        if not price:
+            raise ItemNotFoundException
+
         return original_description, price, currency
 
 
