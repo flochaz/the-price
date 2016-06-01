@@ -18,6 +18,8 @@ class SearchEngine(object):
             self.finder = resolved_target()
 
     def find(self, item):
+        log.info('Looking for the price of {item}'.format(item=item))
+
         if self.finder:
             return self.finder.find(item)
         else:
@@ -28,7 +30,7 @@ class SearchEngine(object):
                 try:
                     text, price, currency = self.finder.find(item)
                 except Exception as e:
-                    log.error(e.message.encode("utf-8"))
+                    log.error(e.message)
                     continue
                 if price:
                     break

@@ -106,7 +106,7 @@ class TestVoiceControl(unittest.TestCase):
         }
 
         response = voice_control.lambda_handler(request)
-        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
+        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.UNKNOWN_MSG + voice_control.REPROMPT_MSG)
 
     @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')

@@ -1,3 +1,9 @@
+GetItemPriceIntent how much is {the dji phantom four|Item}
+GetItemPriceIntent how much cost {the dji phantom three|Item}
+GetItemPriceIntent how much worth {the latest mac book pro|Item}
+GetItemPriceIntent and what about {the latest mac book pro|Item}
+GetItemPriceIntent and {the ipad mini|Item}
+GetItemPriceIntent what about {the latest mac book pro|Item}
 GetItemPriceIntent is {a tesla model three|Item}
 GetItemPriceIntent are {the dji phantom four|Item}
 GetItemPriceIntent cost {an iphone SE sixty four GB|Item}

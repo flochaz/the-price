@@ -33,7 +33,10 @@ class TestGooglePriceFinder(unittest.TestCase):
                      'currency': '$'},
                  {'item': 'kindle Fire',
                      'price': '50',
-                     'currency': '$'}]
+                     'currency': '$'},
+                 {'item': 'DJI Phantom 4',
+                  'price': '1,399.00',
+                  'currency' : '$'}]
         for item in items:
             text, price, currency = finder.find(item['item'])
             self.assertEqual(item['price'], price)

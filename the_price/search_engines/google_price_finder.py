@@ -75,7 +75,6 @@ def parse_description_tag(response):
         check_items = 0
 
         while check_items < 10 and (not currency or not price):
-            log.error('Search in item {index}'.format(index=check_items))
             if 'pagemap' in response['items'][check_items] and\
                             'metatags' in response['items'][check_items]['pagemap'] and \
                             'og:description' in response['items'][check_items]['pagemap']['metatags'][0] and not price:

@@ -8,7 +8,7 @@ from the_price.search_engines.search_engine import SearchEngine
 REPROMPT_MSG = "Ask me for the price of anything you have in mind by asking: How much is it ?"
 WELCOME_MSG = "Hello Welcome to How much ! " + REPROMPT_MSG
 END_MSG = "Ok. Goodbye!"
-UNKNOWN_MSG = "Sorry, I didn't get what you said ..."
+UNKNOWN_MSG = "Sorry, I didn't get what you said ... "
 NOT_FOUND_MSG = "Sorry, I could not find the answer."
 
 def lambda_handler(request_obj, context=None):
@@ -21,7 +21,7 @@ def lambda_handler(request_obj, context=None):
 @alexa.default_handler()
 def default_handler(request):
     """ The default handler gets invoked if no handler is set for a request type """
-    return alexa.create_response(message=REPROMPT_MSG, end_session=True)
+    return alexa.create_response(message=UNKNOWN_MSG + REPROMPT_MSG, end_session=False)
 
 
 @alexa.request_handler("LaunchRequest")
@@ -36,7 +36,7 @@ def session_ended_request_handler(request):
 @alexa.intent_handler('AMAZON.HelpIntent')
 def help_request_handler(request):
     ''' Handler for Help Request '''
-    return alexa.create_response(message=REPROMPT_MSG, end_session=True)
+    return alexa.create_response(message=REPROMPT_MSG, end_session=False)
 
 @alexa.intent_handler('AMAZON.CancelIntent')
 def help_request_handler(request):
