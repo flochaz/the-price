@@ -6,7 +6,7 @@ from ask import alexa
 from the_price.search_engines.search_engine import SearchEngine
 
 WELCOME_MSG = "Hello Welcome to How much !"
-REPROMPT_MSG = "Just ask"
+REPROMPT_MSG = "Ask me for the price of anything you have in mind by asking: How much is it ?"
 END_MSG = "Goodbye!"
 UNKNOWN_MSG = "Sorry, I didn't get what you said ..."
 NOT_FOUND_MSG = "Sorry, I could not find the answer."

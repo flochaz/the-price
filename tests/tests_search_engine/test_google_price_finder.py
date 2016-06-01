@@ -35,7 +35,6 @@ class TestGooglePriceFinder(unittest.TestCase):
                      'price': '50',
                      'currency': '$'}]
         for item in items:
-            print 'LOOKING FOR ITEM '+ item['item']
             text, price, currency = finder.find(item['item'])
             self.assertEqual(item['price'], price)
             self.assertEqual(item['currency'], currency)

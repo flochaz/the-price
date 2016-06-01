@@ -1,18 +1,20 @@
-
-import sys, inspect
 from the_price.search_engines.price_finder import PriceFinder
+from the_price.utils import logger
+
+
+# Following imports only needed to make the __subclasses__() function to return that one as well ...
 from the_price.search_engines.amazon_price_finder import AmazonPriceFinder
-# Following import only needed to make the __subclasses__() function to return that one as well ...
 from the_price.search_engines.google_price_finder import GooglePriceFinder
+
+log = logger.get_logger(__name__)
 
 
 class SearchEngine(object):
 
     def __init__(self, target=None):
-        self.target = target
         self.finder = None
-        if self.target:
-            resolved_target = resolv_target(self.target)
+        if target:
+            resolved_target = resolv_target(target)
             self.finder = resolved_target()
 
     def find(self, item):
@@ -21,11 +23,12 @@ class SearchEngine(object):
         else:
             text, price, currency = None, None, None
             for price_finder_class in get_all_finders_classes():
-                print 'Find {item} with {finder}'.format(item=item, finder=price_finder_class.__name__)
+                log.info('Find {item} with {finder}'.format(item=item, finder=price_finder_class.__name__))
                 self.finder = price_finder_class()
                 try:
                     text, price, currency = self.finder.find(item)
                 except Exception as e:
+                    log.error(e.message.encode("utf-8"))
                     continue
                 if price:
                     break

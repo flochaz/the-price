@@ -23,20 +23,20 @@ class TestResolver(unittest.TestCase):
 class TestSearchEngine(unittest.TestCase):
 
 
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     def test_init_no_target(self, decrypt_data):
         decrypt_data.return_value = None
         default_finder = SearchEngine().finder
         self.assertIsNone(default_finder)
 
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     def test_init_target_google(self, decrypt_data):
         decrypt_data.return_value = None
         default_finder_name = SearchEngine('google').finder.name
         self.assertEqual('Google', default_finder_name)
 
     @patch('the_price.search_engines.google_price_finder.GooglePriceFinder.find')
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     def test_find_target_google(self, decrypt_data, google_find):
         decrypt_data.return_value = None
         SearchEngine('google').find('test')
@@ -44,7 +44,7 @@ class TestSearchEngine(unittest.TestCase):
 
 
     @patch('the_price.search_engines.google_price_finder.GooglePriceFinder.find')
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     def test_find_target_google(self, decrypt_data, google_find):
         decrypt_data.return_value = None
         SearchEngine('google').find('test')
@@ -53,7 +53,7 @@ class TestSearchEngine(unittest.TestCase):
 
     @patch('the_price.search_engines.google_price_finder.GooglePriceFinder.find')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     def test_find_no_target_result_from_first(self, decrypt_data, amazon_find, google_find):
         test_value = 'test'
         decrypt_data.return_value = None
@@ -70,7 +70,7 @@ class TestSearchEngine(unittest.TestCase):
 
     @patch('the_price.search_engines.google_price_finder.GooglePriceFinder.find')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     def test_find_no_target_result_from_first(self, decrypt_data, amazon_find, google_find):
         test_value = 'test'
         decrypt_data.return_value = None

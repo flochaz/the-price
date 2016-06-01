@@ -1,4 +1,4 @@
-from the_price.utils import utils
+from the_price.utils import key_cipher
 
 import unittest
 import base64
@@ -14,13 +14,13 @@ class test_kms(unittest.TestCase):
         AMAZON_ASSOC_TAG="assoctag-23"
 
         #I encrypt my message using boto_master_key_id
-        ENCRYPTED_AMAZON_ACCESS_KEY = utils.encrypt_data(boto_master_key_id,AMAZON_ACCESS_KEY)
-        ENCRYPTED_AMAZON_SECRET_KEY = utils.encrypt_data(boto_master_key_id,AMAZON_SECRET_KEY)
-        ENCRYPTED_AMAZON_ASSOC_TAG = utils.encrypt_data(boto_master_key_id,AMAZON_ASSOC_TAG)
+        ENCRYPTED_AMAZON_ACCESS_KEY = key_cipher.encrypt_data(boto_master_key_id, AMAZON_ACCESS_KEY)
+        ENCRYPTED_AMAZON_SECRET_KEY = key_cipher.encrypt_data(boto_master_key_id, AMAZON_SECRET_KEY)
+        ENCRYPTED_AMAZON_ASSOC_TAG = key_cipher.encrypt_data(boto_master_key_id, AMAZON_ASSOC_TAG)
 
-        self.assertEqual(AMAZON_ACCESS_KEY, utils.decrypt_data(ENCRYPTED_AMAZON_ACCESS_KEY))
-        self.assertEqual(AMAZON_SECRET_KEY, utils.decrypt_data(ENCRYPTED_AMAZON_SECRET_KEY))
-        self.assertEqual(AMAZON_ASSOC_TAG, utils.decrypt_data(ENCRYPTED_AMAZON_ASSOC_TAG))
+        self.assertEqual(AMAZON_ACCESS_KEY, key_cipher.decrypt_data(ENCRYPTED_AMAZON_ACCESS_KEY))
+        self.assertEqual(AMAZON_SECRET_KEY, key_cipher.decrypt_data(ENCRYPTED_AMAZON_SECRET_KEY))
+        self.assertEqual(AMAZON_ASSOC_TAG, key_cipher.decrypt_data(ENCRYPTED_AMAZON_ASSOC_TAG))
 
 
 
@@ -34,10 +34,10 @@ class test_kms(unittest.TestCase):
         AMAZON_ASSOC_TAG="assoctag-23"
 
         #I encrypt my message using boto_master_key_id
-        ENCRYPTED_AMAZON_ACCESS_KEY = base64.b64encode(utils.encrypt_data(boto_master_key_id,AMAZON_ACCESS_KEY))
-        ENCRYPTED_AMAZON_SECRET_KEY = base64.b64encode(utils.encrypt_data(boto_master_key_id,AMAZON_SECRET_KEY))
-        ENCRYPTED_AMAZON_ASSOC_TAG = base64.b64encode(utils.encrypt_data(boto_master_key_id,AMAZON_ASSOC_TAG))
+        ENCRYPTED_AMAZON_ACCESS_KEY = base64.b64encode(key_cipher.encrypt_data(boto_master_key_id, AMAZON_ACCESS_KEY))
+        ENCRYPTED_AMAZON_SECRET_KEY = base64.b64encode(key_cipher.encrypt_data(boto_master_key_id, AMAZON_SECRET_KEY))
+        ENCRYPTED_AMAZON_ASSOC_TAG = base64.b64encode(key_cipher.encrypt_data(boto_master_key_id, AMAZON_ASSOC_TAG))
 
-        self.assertEqual(AMAZON_ACCESS_KEY, utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ACCESS_KEY)))
-        self.assertEqual(AMAZON_SECRET_KEY, utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_SECRET_KEY)))
-        self.assertEqual(AMAZON_ASSOC_TAG, utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ASSOC_TAG)))
+        self.assertEqual(AMAZON_ACCESS_KEY, key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ACCESS_KEY)))
+        self.assertEqual(AMAZON_SECRET_KEY, key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_SECRET_KEY)))
+        self.assertEqual(AMAZON_ASSOC_TAG, key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ASSOC_TAG)))

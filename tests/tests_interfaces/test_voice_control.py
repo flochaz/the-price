@@ -53,7 +53,7 @@ class TestVoiceControl(unittest.TestCase):
         response = voice_control.lambda_handler(request)
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
 
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
     def test_get_existing_item(self, find, decrypt_data):
         item = 'kindle'
@@ -84,7 +84,7 @@ class TestVoiceControl(unittest.TestCase):
         self.assertTrue(item + ' seems to worth ' + price + ' ' + currency  in response['response']['outputSpeech']['text'])
         self.assertEqual(response['response']['card']['content'], response['response']['outputSpeech']['text'])
 
-    @patch('the_price.utils.utils.decrypt_data')
+    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')
     def test_get_not_existing_item(self, find, decrypt_data):
         decrypt_data.return_value = None

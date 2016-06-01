@@ -1,6 +1,6 @@
 from amazon.api import AmazonAPI
 
-from the_price.utils import utils
+from the_price.utils import key_cipher, logger
 import base64
 
 from the_price.search_engines.price_finder import PriceFinder, ItemNotFoundException
@@ -8,6 +8,8 @@ from the_price.search_engines.price_finder import PriceFinder, ItemNotFoundExcep
 ENCRYPTED_AMAZON_ACCESS_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKbAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAAByMHAGCSqGSIb3DQEHBqBjMGECAQAwXAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAwmncVuuLId80GkOzACARCAL6KWOAUtQNTZ0WLd2byRA95Mt8g/tcgPtXorhzKdC0GPXcJ2pDYMwy3ZnxKDDV8I'
 ENCRYPTED_AMAZON_SECRET_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKwAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAACHMIGEBgkqhkiG9w0BBwagdzB1AgEAMHAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMnQYaltzbBomNj7LyAgEQgEOp7hHGe3d1jsY/sl1u+NCXUJUEMYhHkQOqb2+YT6lL6/zrdQXz5auLhgmh3+vL/HtWkq18fWvrAGW5226mSoB2a+eN'
 ENCRYPTED_AMAZON_ASSOC_TAG='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKXAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAABuMGwGCSqGSIb3DQEHBqBfMF0CAQAwWAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAzzswZf3HIriQpkJ0QCARCAK1qhlINJ/ogGfczy96U/DAIQS5kFrZHVtBkW99Y6FWavQmi+5Ijv0Ei1bT8='
+
+log = logger.get_logger(__name__)
 
 
 class AmazonPriceFinder(PriceFinder):
@@ -32,9 +34,9 @@ class AmazonPriceFinder(PriceFinder):
         global AMAZON_ACCESS_KEY
         global AMAZON_SECRET_KEY
         global AMAZON_ASSOC_TAG
-        AMAZON_ACCESS_KEY=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ACCESS_KEY))
-        AMAZON_SECRET_KEY=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_SECRET_KEY))
-        AMAZON_ASSOC_TAG=utils.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ASSOC_TAG))
+        AMAZON_ACCESS_KEY=key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ACCESS_KEY))
+        AMAZON_SECRET_KEY=key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_SECRET_KEY))
+        AMAZON_ASSOC_TAG=key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_AMAZON_ASSOC_TAG))
 
 
     def find(self, item):
@@ -42,6 +44,7 @@ class AmazonPriceFinder(PriceFinder):
         :param item: item to search
         :return: title from vendor, price, currency . Raise a amazon.api.SearchException if nothing found
         """
+        log.info('search for {item} through {class_name}'.format(item=item, class_name=__name__))
         try:
             amazon = AmazonAPI(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_ASSOC_TAG)
             products = amazon.search_n( 1, Keywords=item, SearchIndex='All')
@@ -50,5 +53,7 @@ class AmazonPriceFinder(PriceFinder):
             price, currency = products[0].list_price
 
             return title, price, currency
-        except:
+        #TODO identify proper Exception to expect
+        except Exception as e:
+            log.error(e.message.encode("utf-8"))
             raise ItemNotFoundException
