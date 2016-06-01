@@ -29,8 +29,63 @@ class TestVoiceControl(unittest.TestCase):
         response = voice_control.lambda_handler(request)
 
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.END_MSG)
+        self.assertTrue(response['response']['shouldEndSession'])
 
-    def test_unknown_utterance_request_route_to_default(self):
+
+    def test_help_intent_request_route_to_reprompt(self):
+        request = {
+          "request": {
+            "type": "IntentRequest",
+            "requestId": "EdwRequestId.MY_UUID",
+            "timestamp": "2016-05-22T18:36:12Z",
+            "intent": {
+              "name": "AMAZON.HelpIntent"
+            },
+            "locale": "en-US"
+          },
+          "version": "1.0"
+        }
+
+        response = voice_control.lambda_handler(request)
+        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
+
+    def test_cancel_intent_request_route_to_end(self):
+        request = {
+          "request": {
+            "type": "IntentRequest",
+            "requestId": "EdwRequestId.MY_UUID",
+            "timestamp": "2016-05-22T18:36:12Z",
+            "intent": {
+              "name": "AMAZON.CancelIntent"
+            },
+            "locale": "en-US"
+          },
+          "version": "1.0"
+        }
+
+        response = voice_control.lambda_handler(request)
+        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.END_MSG)
+        self.assertTrue(response['response']['shouldEndSession'])
+
+    def test_stop_intent_request_route_to_end(self):
+        request = {
+          "request": {
+            "type": "IntentRequest",
+            "requestId": "EdwRequestId.MY_UUID",
+            "timestamp": "2016-05-22T18:36:12Z",
+            "intent": {
+              "name": "AMAZON.StopIntent"
+            },
+            "locale": "en-US"
+          },
+          "version": "1.0"
+        }
+
+        response = voice_control.lambda_handler(request)
+        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.END_MSG)
+        self.assertTrue(response['response']['shouldEndSession'])
+
+    def test_unknown_intent_request_route_to_default(self):
         request = {
           "request": {
             "type": "IntentRequest",

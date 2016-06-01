@@ -1,4 +1,7 @@
-Intent is {a tesla model three|Item}
+GetItemPriceIntent is {a tesla model three|Item}
 GetItemPriceIntent are {the dji phantom four|Item}
 GetItemPriceIntent cost {an iphone SE sixty four GB|Item}
+GetItemPriceIntent cost {the kindle fire HD seven|Item}
 GetItemPriceIntent worth {a travel to space|Item}
+GetItemPriceIntent worth {the kobe bryant newport beach house|Item}
+
