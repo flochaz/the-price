@@ -21,13 +21,13 @@ def lambda_handler(request_obj, context=None):
 @alexa.default_handler()
 def default_handler(request):
     """ The default handler gets invoked if no handler is set for a request type """
-    return alexa.create_response(message=UNKNOWN_MSG + REPROMPT_MSG, end_session=False)
+    return alexa.create_response(message=UNKNOWN_MSG + REPROMPT_MSG, reprompt_message=REPROMPT_MSG, end_session=False)
 
 
 @alexa.request_handler("LaunchRequest")
 def launch_request_handler(request):
     ''' Handler for LaunchRequest '''
-    return alexa.create_response(message=WELCOME_MSG, end_session=False)
+    return alexa.create_response(message=WELCOME_MSG, reprompt_message=REPROMPT_MSG, end_session=False)
 
 @alexa.request_handler("SessionEndedRequest")
 def session_ended_request_handler(request):
@@ -36,7 +36,7 @@ def session_ended_request_handler(request):
 @alexa.intent_handler('AMAZON.HelpIntent')
 def help_request_handler(request):
     ''' Handler for Help Request '''
-    return alexa.create_response(message=REPROMPT_MSG, end_session=False)
+    return alexa.create_response(message=REPROMPT_MSG, reprompt_message=REPROMPT_MSG, end_session=False)
 
 @alexa.intent_handler('AMAZON.CancelIntent')
 def help_request_handler(request):
@@ -68,8 +68,8 @@ def get_item_price_intent_handler(request):
         return alexa.create_response(NOT_FOUND_MSG)
 
     # alexa can also build cards which can be sent as part of the response
-    card = alexa.create_card(title="GetItemPriceIntent " + item, subtitle=None,
+    card = alexa.create_card(title="How mush is " + item + " ?", subtitle=None,
                              content=response)
 
     return alexa.create_response(response,
-                                 end_session=True, card_obj=card)
+                                 end_session=False, card_obj=card, reprompt_message=REPROMPT_MSG)

@@ -25,13 +25,14 @@ The idea was as well to not only limits this search to product that you can find
 
 Reading advice: [Getting started guide for the Alexa Skills Kit](https://developer.amazon.com/appsandservices/solutions/alexa/alexa-skills-kit/getting-started-guide)
 
-### API: Examples of utterances to play with the skill:
+#### Examples of utterances to play with the skill:
 ```
-  Alexa, ask How much is a kindle fire HD7
-  Alexa, ask How much is a travel to space
+  Alexa, ask How much is a tesla model 3
+  Alexa, ask How much cost the latest mac book pro
+  Alexa, ask How much worth the kobe bryant's newport beach house
 ```
 
-### Command Line version
+#### Command Line version
 To facilitate testing and interaction, a really simple command line is as well available.
 To install it you can simply:
 ```
@@ -48,7 +49,6 @@ Options:
   --shop TEXT  Narrow done the search to a specific shop
   --help       Show this message and exit.
 ```
-
 ## Technical apsects
 
 ### Current supported Search engine

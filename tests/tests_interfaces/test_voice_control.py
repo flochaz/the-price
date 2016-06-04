@@ -17,6 +17,10 @@ class TestVoiceControl(unittest.TestCase):
         response = voice_control.lambda_handler(request)
 
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.WELCOME_MSG)
+        self.assertFalse(response['response']['shouldEndSession'])
+        self.assertEqual(response['response']['reprompt']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
+
+
 
 
     def test_end_session_request_route_to_end(self):
@@ -48,6 +52,7 @@ class TestVoiceControl(unittest.TestCase):
 
         response = voice_control.lambda_handler(request)
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
+        self.assertEqual(response['response']['reprompt']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
 
     def test_cancel_intent_request_route_to_end(self):
         request = {

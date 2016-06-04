@@ -29,13 +29,13 @@ class TestGooglePriceFinder(unittest.TestCase):
                      'price': '35,000',
                      'currency': '$'},
                     {'item': 'tesla model S',
-                     'price': '70,000',
+                     'price': '71,500',
                      'currency': '$'},
                  {'item': 'kindle Fire',
                      'price': '50',
                      'currency': '$'},
-                 {'item': 'DJI Phantom 4',
-                  'price': '1,399.00',
+                 {'item': 'DJI Phantom 3',
+                  'price': '499',
                   'currency' : '$'}]
         for item in items:
             text, price, currency = finder.find(item['item'])
