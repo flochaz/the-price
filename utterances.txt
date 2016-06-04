@@ -1,13 +1,14 @@
-GetItemPriceIntent how much is {the dji phantom four|Item}
-GetItemPriceIntent how much cost {the dji phantom three|Item}
-GetItemPriceIntent how much worth {the latest mac book pro|Item}
-GetItemPriceIntent and what about {the latest mac book pro|Item}
-GetItemPriceIntent and {the ipad mini|Item}
-GetItemPriceIntent what about {the latest mac book pro|Item}
-GetItemPriceIntent is {a tesla model three|Item}
+GetItemPriceIntent how much is {a tesla model three|Item}
+GetItemPriceIntent how much cost {the latest mac book pro|Item}
+GetItemPriceIntent how much worth {the kobe bryant newport beach house|Item}
+GetItemPriceIntent how much is the worth of {the kobe bryant newport beach house|Item}
+GetItemPriceIntent how much is the cost of {the latest mac book pro|Item}
+GetItemPriceIntent what is the price of {the dji phantom four|Item}
+GetItemPriceIntent what is the cost of {the dji phantom four|Item}
+GetItemPriceIntent what is the worth of {the dji phantom four|Item}
 GetItemPriceIntent are {the dji phantom four|Item}
 GetItemPriceIntent cost {an iphone SE sixty four GB|Item}
-GetItemPriceIntent cost {the kindle fire HD seven|Item}
 GetItemPriceIntent worth {a travel to space|Item}
-GetItemPriceIntent worth {the kobe bryant newport beach house|Item}
+GetItemPriceIntent is {a tesla model three|Item}
+
 
