@@ -68,8 +68,8 @@ def get_item_price_intent_handler(request):
         return alexa.create_response(NOT_FOUND_MSG)
 
     # alexa can also build cards which can be sent as part of the response
-    card = alexa.create_card(title="GetItemPriceIntent " + item, subtitle=None,
+    card = alexa.create_card(title="How mush is " + item + " ?", subtitle=None,
                              content=response)
 
     return alexa.create_response(response,
-                                 end_session=True, card_obj=card)
+                                 end_session=False, card_obj=card, reprompt_message=REPROMPT_MSG)
