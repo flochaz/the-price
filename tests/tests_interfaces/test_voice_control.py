@@ -53,6 +53,8 @@ class TestVoiceControl(unittest.TestCase):
         response = voice_control.lambda_handler(request)
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
         self.assertEqual(response['response']['reprompt']['outputSpeech']['text'], voice_control.REPROMPT_MSG)
+        self.assertFalse(response['response']['shouldEndSession'])
+
 
     def test_cancel_intent_request_route_to_end(self):
         request = {
@@ -112,6 +114,8 @@ class TestVoiceControl(unittest.TestCase):
 
         response = voice_control.lambda_handler(request)
         self.assertEqual(response['response']['outputSpeech']['text'], voice_control.UNKNOWN_MSG + voice_control.REPROMPT_MSG)
+        self.assertFalse(response['response']['shouldEndSession'])
+
 
     @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
@@ -143,6 +147,7 @@ class TestVoiceControl(unittest.TestCase):
         response = voice_control.lambda_handler(request)
         self.assertTrue(item + ' seems to worth ' + price + ' ' + currency  in response['response']['outputSpeech']['text'])
         self.assertEqual(response['response']['card']['content'], response['response']['outputSpeech']['text'])
+        self.assertFalse(response['response']['shouldEndSession'])
 
     @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')
@@ -169,7 +174,9 @@ class TestVoiceControl(unittest.TestCase):
         }
 
         response = voice_control.lambda_handler(request)
-        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.NOT_FOUND_MSG)
+        self.assertEqual(response['response']['outputSpeech']['text'], voice_control.NOT_FOUND_MSG + '. ' + voice_control.CONTINUE_MSG)
+        self.assertFalse(response['response']['shouldEndSession'])
+
 
 
     @patch('the_price.interfaces.command_line.SearchEngine.find')

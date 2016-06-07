@@ -8,8 +8,9 @@ from the_price.search_engines.search_engine import SearchEngine
 REPROMPT_MSG = "Ask me for the price of anything you have in mind by asking: How much is it ?"
 WELCOME_MSG = "Hello Welcome to How much ! " + REPROMPT_MSG
 END_MSG = "Ok. Goodbye!"
-UNKNOWN_MSG = "Sorry, I didn't get what you said ... "
+UNKNOWN_MSG = "Sorry, I didn't get what you said ... Can you reformulate please ?"
 NOT_FOUND_MSG = "Sorry, I could not find the answer."
+CONTINUE_MSG = "Anything else in mind ? Just ask me how much is it ?"
 
 def lambda_handler(request_obj, context=None):
 
@@ -63,12 +64,13 @@ def get_item_price_intent_handler(request):
     try:
         search_engine = SearchEngine()
         title, price, currency = search_engine.find(item)
-        response = item + ' seems to worth ' +  str(price) + ' ' + currency + ' according to ' + search_engine.finder.name
+        response = item + ' seems to worth ' +  str(price) + ' ' + currency + ' according to ' +\
+                   search_engine.finder.name + '. '+ CONTINUE_MSG
     except:
-        return alexa.create_response(NOT_FOUND_MSG)
+        return alexa.create_response(NOT_FOUND_MSG + '. ' + CONTINUE_MSG)
 
     # alexa can also build cards which can be sent as part of the response
-    card = alexa.create_card(title="How mush is " + item + " ?", subtitle=None,
+    card = alexa.create_card(title="How much is " + item + " ?", subtitle=None,
                              content=response)
 
     return alexa.create_response(response,

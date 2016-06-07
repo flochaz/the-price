@@ -1,18 +1,24 @@
+GetItemPriceIntent is {a tesla model three|Item}
+GetItemPriceIntent are {the bose speakers|Item}
 GetItemPriceIntent how much is {a tesla model three|Item}
-GetItemPriceIntent how much cost {the latest mac book pro|Item}
+GetItemPriceIntent how much are {the bose speakers|Item}
+GetItemPriceIntent is the price of {a tesla model three|Item}
+GetItemPriceIntent how much is the price of {a tesla model three|Item}
+GetItemPriceIntent what is the price of {the dji phantom four|Item}
+GetItemPriceIntent worth {a travel to space|Item}
 GetItemPriceIntent how much worth {the kobe bryant newport beach house|Item}
 GetItemPriceIntent how much is the worth of {the kobe bryant newport beach house|Item}
-GetItemPriceIntent how much is the cost of {the latest mac book pro|Item}
 GetItemPriceIntent how much is {the latest mac book pro|Item} worth
-GetItemPriceIntent how much does {the dji phantom three|Item} cost
-GetItemPriceIntent what is the price of {the dji phantom four|Item}
-GetItemPriceIntent what is the cost of {the dji phantom four|Item}
-GetItemPriceIntent what is the worth of {the dji phantom four|Item}
-GetItemPriceIntent are {the dji phantom four|Item}
-GetItemPriceIntent cost {an iphone SE sixty four GB|Item}
-GetItemPriceIntent costs {the kindle fire HD seven|Item}
-GetItemPriceIntent worth {a travel to space|Item}
-GetItemPriceIntent is {a tesla model three|Item}
-GetItemPriceIntent does {a tesla model three|Item} cost
 GetItemPriceIntent is {a tesla model three|Item} worth
-GetItemPriceIntent {the pamppers diapers|Item} are
+GetItemPriceIntent what is the worth of {the dji phantom four|Item}
+GetItemPriceIntent cost {an iphone SE sixty four GB|Item}
+GetItemPriceIntent how much cost {the latest mac book pro|Item}
+GetItemPriceIntent how much is the cost of {the latest mac book pro|Item}
+GetItemPriceIntent how much does {the dji phantom three|Item} cost
+GetItemPriceIntent does {a tesla model three|Item} cost
+GetItemPriceIntent costs {the kindle fire HD seven|Item}
+GetItemPriceIntent what is the cost of {the dji phantom four|Item}
+GetItemPriceIntent {a tesla model three|Item} is
+GetItemPriceIntent {the bose speakers|Item} are
+GetItemPriceIntent how much {a tesla model three|Item} is
+GetItemPriceIntent how much {the bose speakers|Item} are
