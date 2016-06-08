@@ -46,7 +46,7 @@ class AmazonPriceFinder(PriceFinder):
 
             title = products[0].title
             price, currency = products[0].list_price
-
+            log.info('Found price for {title}'.format(title=title))
             return title, price, currency
         #TODO identify pr
         except Exception as e:

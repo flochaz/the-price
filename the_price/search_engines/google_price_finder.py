@@ -28,6 +28,7 @@ class GooglePriceFinder(PriceFinder):
 
     def find(self, item):
         try:
+            log.info('search for {item} through {class_name}'.format(item=item, class_name=__name__))
             service = build("customsearch", "v1",
                 developerKey=google_developer_key)
             #https://developers.google.com/custom-search/json-api/v1/reference/cse/list#response
@@ -92,12 +93,12 @@ def parse_snippets_tag(response):
 
         check_items = 0
         while check_items < 10 and (not currency or not price):
-            log.info('CHECK htmlSnippet')
+            log.debug('CHECK htmlSnippet')
             original_description, price, currency = extract_price_from_text(response['items'][check_items]['htmlSnippet'])
             log.debug(original_description.encode('ascii', 'ignore'))
 
             if not price:
-                log.info('CHECK Snippet')
+                log.debug('CHECK Snippet')
                 original_description, price, currency = extract_price_from_text(response['items'][check_items]['snippet'])
                 log.debug(original_description.encode('ascii', 'ignore'))
             check_items += 1

@@ -18,14 +18,11 @@ class SearchEngine(object):
             self.finder = resolved_target()
 
     def find(self, item):
-        log.info('Looking for the price of {item}'.format(item=item))
-
         if self.finder:
             return self.finder.find(item)
         else:
             text, price, currency = None, None, None
             for price_finder_class in get_all_finders_classes():
-                log.info('Find {item} with {finder}'.format(item=item, finder=price_finder_class.__name__))
                 self.finder = price_finder_class()
                 try:
                     text, price, currency = self.finder.find(item)
