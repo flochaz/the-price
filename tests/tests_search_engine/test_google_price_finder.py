@@ -1,14 +1,17 @@
 import unittest
-import mock
+from mock import patch
 
-from the_price.search_engines.google_price_finder import  GooglePriceFinder
+
+from the_price.search_engines.google_price_finder import  GooglePriceFinder, creds_parser
 from the_price.search_engines.google_price_finder import extract_price_from_text
 
 
 class TestGooglePriceFinder(unittest.TestCase):
 
-    @mock.patch('the_price.search_engines.google_price_finder.ENCRYPTED_GOOGLE_DEVELOPER_KEY', 'CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKXAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAABuMGwGCSqGSIb3DQEHBqBfMF0CAQAwWAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAwUuYBc9YjGGlPjGZQCARCAK1BnG02jRgCbcUdxEB902q5pFMiOvEFMwOyNKeieCZ1TEhy5H8yzfRFpm2g=')
-    def test_search_with_wrong_creds(self):
+    @patch('the_price.utils.creds_parser.get_creds')
+    def test_search_with_wrong_creds(self, fake_get_creds):
+        fake_get_creds.return_value = {'google_custom_search_engine_key': 'fake_key',
+                                       'google_developer_key': 'fake_key'}
         finder = GooglePriceFinder()
         try:
             finder.find('kindle')

@@ -117,13 +117,11 @@ class TestVoiceControl(unittest.TestCase):
         self.assertFalse(response['response']['shouldEndSession'])
 
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
-    def test_get_existing_item(self, find, decrypt_data):
+    def test_get_existing_item(self, find):
         item = 'kindle'
         price = '119'
         currency = 'USD'
-        decrypt_data.return_value = None
         find.return_value = 'kindle', price, currency
         request = {
           "request": {
@@ -149,10 +147,8 @@ class TestVoiceControl(unittest.TestCase):
         self.assertEqual(response['response']['card']['content'], response['response']['outputSpeech']['text'])
         self.assertFalse(response['response']['shouldEndSession'])
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')
-    def test_get_not_existing_item(self, find, decrypt_data):
-        decrypt_data.return_value = None
+    def test_get_not_existing_item(self, find):
         find.side_effect = SearchException()
         request = {
           "request": {

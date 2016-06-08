@@ -15,10 +15,8 @@ class TestCLI(unittest.TestCase):
         assert not result.exception
         self.assertTrue('Usage' in result.output, result.output)
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
-    def test_cli_exiting_item_case1(self, find, decrypt_data):
-        decrypt_data.return_value = None
+    def test_cli_exiting_item_case1(self, find):
         find.return_value = 'kindle', '119', 'USD'
         find.exit_code = 0
         runner = CliRunner()
@@ -27,11 +25,9 @@ class TestCLI(unittest.TestCase):
         assert not result.exception
         self.assertTrue('kindle cost 119 USD on Amazon' in result.output, result.output)
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.search_engines.amazon_price_finder.AmazonPriceFinder.find')
     @patch('the_price.search_engines.google_price_finder.GooglePriceFinder.find')
-    def test_cli_exiting_item_case2(self, find_google, find_amazon, decrypt_data):
-        decrypt_data.return_value = None
+    def test_cli_exiting_item_case2(self, find_google, find_amazon):
         find_amazon.return_value = None, None, None
         find_google.return_value = 'tesla', '350000', 'USD'
         runner = CliRunner()
@@ -40,10 +36,8 @@ class TestCLI(unittest.TestCase):
         assert not result.exception
         self.assertTrue('tesla cost 350000 USD on Google' in result.output, result.output)
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')
-    def test_cli_exiting_item_google(self, find, decrypt_data):
-        decrypt_data.return_value = None
+    def test_cli_exiting_item_google(self, find):
         find.return_value = 'kindle', '119', 'USD'
         find.exit_code = 0
         runner = CliRunner()
@@ -53,10 +47,8 @@ class TestCLI(unittest.TestCase):
         self.assertTrue('kindle cost 119 USD on Google' in result.output, result.output)
 
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')
-    def test_cli_exiting_item_unknown(self, find, decrypt_data):
-        decrypt_data.return_value = None
+    def test_cli_exiting_item_unknown(self, find):
         find.return_value = 'kindle', '119', 'USD'
         find.exit_code = 0
         runner = CliRunner()
@@ -65,10 +57,8 @@ class TestCLI(unittest.TestCase):
         assert not result.exception
         self.assertTrue('kindle cost 119 USD on Amazon' in result.output, result.output)
 
-    @patch('the_price.utils.key_cipher.decrypt_data')
     @patch('the_price.interfaces.command_line.SearchEngine.find')
-    def test_cli_not_existing_item(self, find, decrypt_data):
-        decrypt_data.return_value = None
+    def test_cli_not_existing_item(self, find):
         find.side_effect = SearchException()
         runner = CliRunner()
         result = runner.invoke(command_line.ask_the_price_of, ['qwertyui'])

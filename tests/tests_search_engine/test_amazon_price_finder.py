@@ -1,17 +1,19 @@
 import unittest
-from urllib2 import HTTPError
 from the_price.search_engines.price_finder import ItemNotFoundException
 
-import mock
+from mock import  patch
 
 from the_price.search_engines.amazon_price_finder import  AmazonPriceFinder
-import the_price
 
 
 class TestAmazonPriceFinder(unittest.TestCase):
 
-    @mock.patch('the_price.search_engines.amazon_price_finder.ENCRYPTED_AMAZON_ACCESS_KEY', 'CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKXAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAABuMGwGCSqGSIb3DQEHBqBfMF0CAQAwWAYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAwUuYBc9YjGGlPjGZQCARCAK1BnG02jRgCbcUdxEB902q5pFMiOvEFMwOyNKeieCZ1TEhy5H8yzfRFpm2g=')
-    def test_search_with_wrong_creds(self):
+    @patch('the_price.utils.creds_parser.get_creds')
+    def test_search_with_wrong_creds(self, fake_get_creds):
+        fake_get_creds.return_value = {'amazon_access_key': 'fake_key',
+                                       'amazon_secret_key': 'fake_key',
+                                       'amazon_assoc_tag': 'fake_key'}
+
         finder = AmazonPriceFinder()
         try:
             finder.find('kindle')

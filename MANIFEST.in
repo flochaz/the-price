@@ -1,3 +1,5 @@
 include VERSION
 include requirements.txt
 include .coveragerc
+include credentials.ini
+include set_cred.sh

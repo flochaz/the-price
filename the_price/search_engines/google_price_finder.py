@@ -2,15 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from googleapiclient.discovery import build
-from the_price.utils import key_cipher, logger
-import base64
+from the_price.utils import logger, creds_parser
 import re
-import pprint
 
 from the_price.search_engines.price_finder import PriceFinder, ItemNotFoundException
-
-ENCRYPTED_GOOGLE_DEVELOPER_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKvAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAACGMIGDBgkqhkiG9w0BBwagdjB0AgEAMG8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMewGXR5nRnAhvG+V7AgEQgEJw8+MnUI02rDomatA2NSZa7DBmKG8hCUwbIsxx4m7OkTvOEa4XqNnqzo4ryhGYzbAPK7iwDnCk6iaLvBv3Q96TGWM='
-ENCRYPTED_GOOGLE_CUSTOM_SEARCH_ENGINE_KEY='CiBcAIDW86v+VtwF1daIZ/rGEHGVM5uMbYXqq8HaWbtoZhKoAQEBAgB4XACA1vOr/lbcBdXWiGf6xhBxlTObjG2F6qvB2lm7aGYAAAB/MH0GCSqGSIb3DQEHBqBwMG4CAQAwaQYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyR114xwTWYi7LVqpICARCAPBRadBmFoyLKzLYGeEHei0dwuTcn1C9jy8NM22rOMRN0RYcXMx/12cmgDzq58bZqO1/u3e+8BK7AIo7pzA=='
 
 log = logger.get_logger(__name__)
 
@@ -18,27 +13,27 @@ log = logger.get_logger(__name__)
 class GooglePriceFinder(PriceFinder):
     ''' Search for price on Google using custom search api. '''
 
+
     def __init__(self):
         """
         Set creds from env variables. Raise KeyError exception if any env var not found
         """
         self.name = 'Google'
-        global GOOGLE_DEVELOPER_KEY
-        global GOOGLE_CUSTOM_SEARCH_ENGINE_KEY
+        global google_developer_key, google_custom_search_engine_key
 
-        GOOGLE_DEVELOPER_KEY = key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_GOOGLE_DEVELOPER_KEY))
-        GOOGLE_CUSTOM_SEARCH_ENGINE_KEY = key_cipher.decrypt_data(base64.b64decode(ENCRYPTED_GOOGLE_CUSTOM_SEARCH_ENGINE_KEY))
+        creds = creds_parser.get_creds(self.name)
+        google_developer_key = creds['google_developer_key']
+        google_custom_search_engine_key = creds['google_custom_search_engine_key']
 
 
-    #TODO: Refactor !!
     def find(self, item):
         try:
             service = build("customsearch", "v1",
-                developerKey=GOOGLE_DEVELOPER_KEY)
+                developerKey=google_developer_key)
             #https://developers.google.com/custom-search/json-api/v1/reference/cse/list#response
             response = service.cse().list(
             q='how much is the ' + item,
-            cx=GOOGLE_CUSTOM_SEARCH_ENGINE_KEY,
+            cx=google_custom_search_engine_key,
             ).execute()
             #log.debug('RESPONSE = {response}'.format(pprint.pprint(response)))
             original_description, price, currency = parse_response(response)
@@ -46,7 +41,7 @@ class GooglePriceFinder(PriceFinder):
 
         #TODO identify proper Exception to expect
         except Exception as e:
-            log.error(e.__class__)
+            log.error(e)
 
 
 def parse_response(response):
