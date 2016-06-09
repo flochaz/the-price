@@ -31,8 +31,15 @@ Reading advice: [Getting started guide for the Alexa Skills Kit](https://develop
   Alexa, ask How much cost the latest mac book pro
   Alexa, ask How much worth the kobe bryant's newport beach house
 ```
+## Technical apsects
 
-#### Command Line version
+### Prerequisites
+In order to make this code works, you will need:
+1. Register to Amazon affiliate (https://affiliate-program.amazon.com/gp/advertising/api/registration/welcome.html)
+2. Create a Google Custom Search Engine and associated API credentials (https://console.developers.google.com and https://cse.google.com/cse)
+3. Set your credentials into 'credentials.ini'
+
+### Command Line version
 To facilitate testing and interaction, a really simple command line is as well available.
 To install it you can simply:
 ```
@@ -49,7 +56,6 @@ Options:
   --shop TEXT  Narrow done the search to a specific shop
   --help       Show this message and exit.
 ```
-## Technical apsects
 
 ### Current supported Search engine
 
