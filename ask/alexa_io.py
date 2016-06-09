@@ -3,6 +3,7 @@ from collections import OrderedDict, defaultdict
 import json
 import pkgutil
 import inspect
+from the_price.utils import creds_parser
 
 RAW_RESPONSE = """
 {
@@ -54,6 +55,9 @@ class Request(object):
 
     def session_id(self):
         return self.request["session"]["sessionId"]
+
+    def application_id(self):
+        return self.request["session"]["application"]["applicationId"]
 
     def get_slot_value(self, slot_name):
         try:
@@ -166,6 +170,13 @@ class VoiceHandler(ResponseBuilder):
     def route_request(self, request_json, metadata=None):
         ''' Route the request object to the right handler function '''
         request = Request(request_json)
+        expected_application_id = creds_parser.get_creds('Alexa').get('alexa_application_id')
+        application_id = request.application_id()
+
+        if application_id != expected_application_id:
+            raise ValueError("Invalid Application ID: {expected_application_id} != {application_id}".format(
+                expected_application_id=expected_application_id, application_id=application_id))
+
         request.metadata = metadata        
         handler_fn = self._handlers[self._default] # Set default handling for noisy requests
 

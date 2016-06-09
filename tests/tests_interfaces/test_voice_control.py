@@ -2,6 +2,7 @@ import unittest
 from mock import patch
 
 from the_price.interfaces import voice_control
+from the_price.utils.creds_parser import get_creds
 from amazon.api import SearchException
 
 
@@ -9,6 +10,11 @@ class TestVoiceControl(unittest.TestCase):
 
     def test_launch_request_route_to_welcome(self):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "LaunchRequest"
           },
@@ -25,6 +31,11 @@ class TestVoiceControl(unittest.TestCase):
 
     def test_end_session_request_route_to_end(self):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "SessionEndedRequest"
           },
@@ -38,6 +49,11 @@ class TestVoiceControl(unittest.TestCase):
 
     def test_help_intent_request_route_to_reprompt(self):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",
@@ -58,6 +74,11 @@ class TestVoiceControl(unittest.TestCase):
 
     def test_cancel_intent_request_route_to_end(self):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",
@@ -76,6 +97,11 @@ class TestVoiceControl(unittest.TestCase):
 
     def test_stop_intent_request_route_to_end(self):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",
@@ -94,6 +120,11 @@ class TestVoiceControl(unittest.TestCase):
 
     def test_unknown_intent_request_route_to_default(self):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",
@@ -124,6 +155,11 @@ class TestVoiceControl(unittest.TestCase):
         currency = 'USD'
         find.return_value = 'kindle', price, currency
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",
@@ -151,6 +187,11 @@ class TestVoiceControl(unittest.TestCase):
     def test_get_not_existing_item(self, find):
         find.side_effect = SearchException()
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",
@@ -178,6 +219,11 @@ class TestVoiceControl(unittest.TestCase):
     @patch('the_price.interfaces.command_line.SearchEngine.find')
     def test_get_none_item(self, find):
         request = {
+          "session": {
+            "application": {
+            "applicationId": get_creds('Alexa').get('alexa_application_id')
+            }
+          },
           "request": {
             "type": "IntentRequest",
             "requestId": "EdwRequestId.MY_UUID",

@@ -1,5 +1,4 @@
 from amazon.api import AmazonAPI
-
 from the_price.utils import logger, creds_parser
 
 from the_price.search_engines.price_finder import PriceFinder, ItemNotFoundException
@@ -47,8 +46,9 @@ class AmazonPriceFinder(PriceFinder):
             title = products[0].title
             price, currency = products[0].list_price
             log.info('Found price for {title}'.format(title=title))
+
             return title, price, currency
-        #TODO identify pr
+        #TODO identify proper
         except Exception as e:
             log.error(e.message)
             raise ItemNotFoundException
